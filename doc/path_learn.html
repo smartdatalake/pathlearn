@@ -1,0 +1,652 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PathL &mdash; PathL  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Preprocessing" href="preprocessing.html" />
+    <link rel="prev" title="PathL’s documentation." href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> PathL
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">PathL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feat_transform.html">Feat Transform</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PathL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>PathL</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/path_learn.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-path_learn">
+<span id="pathl"></span><h1>PathL<a class="headerlink" href="#module-path_learn" title="Permalink to this headline">¶</a></h1>
+<p>This module contains the implementation of PathLearn as well as functions to train and apply it.</p>
+<dl class="py class">
+<dt id="path_learn.PathL">
+<em class="property">class </em><code class="sig-prename descclassname">path_learn.</code><code class="sig-name descname">PathL</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">G</span></em>, <em class="sig-param"><span class="n">T</span></em>, <em class="sig-param"><span class="n">feat_transform_func</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">in_params</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.PathL" title="Permalink to this definition">¶</a></dt>
+<dd><p>This calss implements the PathLearn model using Pytorch.</p>
+<p>Attributes:</p>
+<dl class="simple">
+<dt>G<span class="classifier">networkx.MultiGraph</span></dt><dd><p>The graph that is modelled. Each node and edge of the graph must have two attributes: ‘type’: int that contains
+the of the node/edge and ‘features’: List[float] that contains the features of the node/edge.</p>
+</dd>
+<dt>T<span class="classifier">Dict[ Any, Dict[ Any, List[ List[ Any ] ] ] ]</span></dt><dd><p>A 2-level dictionary that contains all paths that exist between a pair of nodes. For node pair (u,v), T[u][v]
+contains a list with all paths from u to v that exist in G. Each path is a sequence of edge ids (as used in
+networkx.MultiGraph) and node ids. The path is also represented as a List. If PathL is applied to a node pair
+an entry for the pair must exist in T.</p>
+</dd>
+<dt>edge_type<span class="classifier">int</span></dt><dd><p>The type of the edge that is modelled.</p>
+</dd>
+<dt>n<span class="classifier">int</span></dt><dd><p>Number of nodes in G.</p>
+</dd>
+<dt>m<span class="classifier">int</span></dt><dd><p>Number of edges in G.</p>
+</dd>
+<dt>node_inds<span class="classifier">Dict[Any, int]</span></dt><dd><p>Map from node ids of G to integers [0,n-1], used for indexing.</p>
+</dd>
+<dt>edge_inds<span class="classifier">Dict[ (Any,Any,int), int]</span></dt><dd><p>Map from edges of G to integers [n,n+m-1], used for indexing.</p>
+</dd>
+<dt>rho<span class="classifier">int</span></dt><dd><p>Number of node types in G.</p>
+</dd>
+<dt>ell<span class="classifier">int</span></dt><dd><p>Number of edge types in G.</p>
+</dd>
+<dt>max_feat_dim<span class="classifier">int</span></dt><dd><p>Number of features for the node/edge type with the largest number of features.</p>
+</dd>
+<dt>max_path_steps<span class="classifier">int</span></dt><dd><p>Number of elements (nodes and edges) of the longest path of T.</p>
+</dd>
+<dt>W1<span class="classifier">torch.nn.Parameter</span></dt><dd><p>Tensor of size ell+rho+1 x max_feat_dim containing the weights of the features of each node/edge type.</p>
+</dd>
+<dt>W2<span class="classifier">torch.nn.Parameter</span></dt><dd><p>Tensor of size ell+rho+1 x 1 containing the constant weights each node/edge type.</p>
+</dd>
+<dt>b<span class="classifier">torch.nn.Parameter</span></dt><dd><p>The bias of the model (scalar).</p>
+</dd>
+<dt>Vf: torch.nn.Tensor</dt><dd><p>Tensor of size n+m+1 x max_feat_dim containing the node/edge features. Vf[node_inds[v]] contains the feature
+vector of node v, Vf[edge_inds[e]] contains the feature vector of edge e. The vectors are padded with zeros to
+length max_feat_dim.</p>
+</dd>
+<dt>Vc: torch.nn.Tensor</dt><dd><p>Tensor of size n+m+1 x 1 containing the node/edge types. Vc[node_inds[v]] contains the type of node v,
+Vf[edge_inds[e]] contains the type of edge e.</p>
+</dd>
+<dt>in_params: Dict[str, Union(torch.nn.Parameter, torch.nn.Tensor)]</dt><dd><p>If given, used to initialise W1,W2,b,Vf,Vc.</p>
+</dd>
+<dt>feat_transform_func: callable</dt><dd><p>A function that performs any required feature engineering transformations on the features of the paths, when
+applying the model.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="path_learn.PathL.add_paths">
+<code class="sig-name descname">add_paths</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">T</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.PathL.add_paths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds alla paths from the input path dictionary to the existing path dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>T</strong> – A path dictionary T.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="path_learn.PathL.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">batch_pairs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.PathL.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the scores for each pair using tensor operators available in torch. The tensors used internally are:</p>
+<dl class="simple">
+<dt>Vf_slc: Contains the features for the edges/nodes of each path for each pair in batch_pairs. The vectors are</dt><dd><p>layed out in the 3d tensor as follows: first dimension represents the path, second dimension represents
+the step of the path and 3rd dimension contains the features. The paths for different nodes are stacked
+along the first dimension. max_paths_num entries correspond to each entry of batch_pairs. When a pair
+has &lt; max_paths_num paths the remaining 2d slices are padded with zeros, selected by the -1 values in
+all_steps variable. E.g., Vf_slc[0][1][2] contains the third feature of the second element of the first
+path of the first pair, Vf_slc[max_paths_num+1][1][2] contains the third feature of the second element
+of the second path of the second pair. The tensor’s shape is (len(batch_pairs) x max_paths_num,
+max_path_steps, max_feat_dim).</p>
+</dd>
+<dt>Vc_slc: Contains the type for the edge/nodes of each path for each pair in batch_pairs. The layout is similar</dt><dd><p>Vf_slc: first dimension represents the path, second dimension represents the node/edge, and the entries
+for each pair are padded to max_paths_num in the first dimension and max_path_step in the second. E.g.,
+Vc_slc[0][1] contains an integer that represents the type of the second element of the first path of
+the first pair, Vc_slc[max_paths_num+1][1] contains an integer that represents the type of the second
+element of the second path of the second pair. The tensor’s shape is (len(batch_pairs) x max_paths_num,
+max_path_steps)</p>
+</dd>
+<dt>W1_slc: Contains the weight for each element of Vf_slc. The weights are selected according to the types of</dt><dd><p>Vf_slc.  Has the same shpae and layout as Vf_slc.</p>
+</dd>
+<dt>W2_slc: Contains the constant weight, due to the type, for each element in Vc_slc. Has the same shape and layout</dt><dd><p>as Vc_slc.</p>
+</dd>
+</dl>
+<p>W2_mask: Used to mask the nodes used for padding in W2_slc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>batch_pairs</strong> – An iterable with node pairs.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A 1-d tensor with a scoreor each pair.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="path_learn.PathL.get_batch_paths">
+<code class="sig-name descname">get_batch_paths</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">batch_pairs</span></em>, <em class="sig-param"><span class="n">T</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.PathL.get_batch_paths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collects the nodes ands edges for each path for each pair in batch_pairs. Padds with -1 to reach
+dim_size*max_path_steps entries for each pair. When used to index Vf, Vc -1 selects the last element which
+corresponds to a node with all zero features and a unique type used for padding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch_pairs</strong> – An iterable with node pairs</p></li>
+<li><p><strong>T</strong> – Path dictionary T.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A 1-d array with all steps of the paths and the maximum number of paths per pair.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="path_learn.PathL.get_edge_type">
+<code class="sig-name descname">get_edge_type</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">G</span></em>, <em class="sig-param"><span class="n">T</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.PathL.get_edge_type" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>G</strong> – Input graph.</p></li>
+<li><p><strong>T</strong> – Path dictionary T.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The type of the modelled edge.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="path_learn.PathL.get_params">
+<code class="sig-name descname">get_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.PathL.get_params" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A dictionary with the parameters of the model.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="path_learn.PathL.make_cats">
+<code class="sig-name descname">make_cats</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">G</span></em>, <em class="sig-param"><span class="n">n</span></em>, <em class="sig-param"><span class="n">m</span></em>, <em class="sig-param"><span class="n">rho</span></em>, <em class="sig-param"><span class="n">ell</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.PathL.make_cats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates type tensor Vf.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>G</strong> – Input graph.</p></li>
+<li><p><strong>n</strong> – Number of nodes.</p></li>
+<li><p><strong>m</strong> – Number of edges.</p></li>
+<li><p><strong>rho</strong> – Number of node types.</p></li>
+<li><p><strong>ell</strong> – Number of edge types.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tensor of size n+m+1 x 1 containing the node/edge types. Vc[node_inds[v]] contains the type of node v, Vf[edge_inds[e]] contains the type of edge e.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="path_learn.PathL.make_feats">
+<code class="sig-name descname">make_feats</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">G</span></em>, <em class="sig-param"><span class="n">n</span></em>, <em class="sig-param"><span class="n">m</span></em>, <em class="sig-param"><span class="n">feat_dim</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.PathL.make_feats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates feature tensor Vf.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>G</strong> – Input graph.</p></li>
+<li><p><strong>n</strong> – Number of nodes.</p></li>
+<li><p><strong>m</strong> – Number of edges.</p></li>
+<li><p><strong>feat_dim</strong> – Number of features on the node/edge with the most features.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tensor of size n+m+1 x max_feat_dim containing the node/edge features. Vf[node_inds[v]] contains the         feature vector of node v, Vf[edge_inds[e]] contains the feature vector of edge e. The vectors are padded with         zeros to length max_feat_dim.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="path_learn.PathL.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pairs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.PathL.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wraps forward()</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pairs</strong> – An iterable of node pairs.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A 1-d numpy array with a score for each pair.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="path_learn.PathL.predict_batch">
+<code class="sig-name descname">predict_batch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pairs</span></em>, <em class="sig-param"><span class="n">batch_size</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.PathL.predict_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls forward() incrementally.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pairs</strong> – An iterable with node pairs</p></li>
+<li><p><strong>batch_size</strong> – Size of increment.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A 1-d tensor with a score for each pair.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="path_learn.PathL.predict_train">
+<code class="sig-name descname">predict_train</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pairs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.PathL.predict_train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wraps forward()</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pairs</strong> – An iterable with node pairs.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A 1-d tensor with a score for each pair.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="path_learn.apply_model">
+<code class="sig-prename descclassname">path_learn.</code><code class="sig-name descname">apply_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">pairs</span></em>, <em class="sig-param"><span class="n">T</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.apply_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies the model on a given set of pairs. If model.T does not contains entries for the fiven set of
+pairs, these entries must be provided in T argument.
+:param model: A PathL model.
+:param pairs: An iterable with node pairs.
+:param T: A path dictionary.
+:return: A score for each node pair.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="path_learn.calc_batch_loss_bce">
+<code class="sig-prename descclassname">path_learn.</code><code class="sig-name descname">calc_batch_loss_bce</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">batch</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.calc_batch_loss_bce" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – A PathL model.</p></li>
+<li><p><strong>batch</strong> – An iterable with node pairs.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Binary cross entropy loss</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="path_learn.calc_batch_loss_cross_ent">
+<code class="sig-prename descclassname">path_learn.</code><code class="sig-name descname">calc_batch_loss_cross_ent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">batch</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.calc_batch_loss_cross_ent" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – A PathL model.</p></li>
+<li><p><strong>batch</strong> – An iterable with node pairs.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Cross entropy Loss.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="path_learn.calc_batch_loss_cross_ent_list">
+<code class="sig-prename descclassname">path_learn.</code><code class="sig-name descname">calc_batch_loss_cross_ent_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">batch</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.calc_batch_loss_cross_ent_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>List-wise Cross-Entropy loss, described in “Baoxu Shi, Tim Weninger, ProjE: Embedding Projection for KnowledgeGraph Completion, AAAi 2017”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – A PathL model.</p></li>
+<li><p><strong>batch</strong> – An iterable with node pairs.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List-wise cross entropy loss.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="path_learn.calc_batch_loss_cross_ent_val">
+<code class="sig-prename descclassname">path_learn.</code><code class="sig-name descname">calc_batch_loss_cross_ent_val</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">batch</span></em>, <em class="sig-param"><span class="n">val_step</span></em>, <em class="sig-param"><span class="n">max_val_size</span><span class="o">=</span><span class="default_value">10000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.calc_batch_loss_cross_ent_val" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cross-Entropy loss used for validation. Applies calc_batch_loss_cross_ent incrementally in steps of size val_step</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – A PathL model.</p></li>
+<li><p><strong>batch</strong> – An iterable with node pairs.</p></li>
+<li><p><strong>val_step</strong> – Increment size.</p></li>
+<li><p><strong>max_val_size</strong> – Maximum size for batch.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Cross entropy loss.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="path_learn.calc_batch_loss_margin">
+<code class="sig-prename descclassname">path_learn.</code><code class="sig-name descname">calc_batch_loss_margin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">batch</span></em>, <em class="sig-param"><span class="n">margin</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.calc_batch_loss_margin" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – PathL model.</p></li>
+<li><p><strong>batch</strong> – An iterable with node pairs.</p></li>
+<li><p><strong>margin</strong> – Margin parameter.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Hinge loss.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="path_learn.calc_batch_loss_mse">
+<code class="sig-prename descclassname">path_learn.</code><code class="sig-name descname">calc_batch_loss_mse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">batch</span></em>, <em class="sig-param"><span class="n">alpha</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.calc_batch_loss_mse" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – A PathL model.</p></li>
+<li><p><strong>batch</strong> – An iterable with node pairs.</p></li>
+<li><p><strong>alpha</strong> – Negative sample parameter.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>MSE loss.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="path_learn.calc_val_loss_mr">
+<code class="sig-prename descclassname">path_learn.</code><code class="sig-name descname">calc_val_loss_mr</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">test_set</span></em>, <em class="sig-param"><span class="n">test_labs</span></em>, <em class="sig-param"><span class="n">val_step</span><span class="o">=</span><span class="default_value">4096</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.calc_val_loss_mr" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – A PathL model.</p></li>
+<li><p><strong>test_set</strong> – Test pairs.</p></li>
+<li><p><strong>test_labs</strong> – Test labels.</p></li>
+<li><p><strong>val_step</strong> – Increment step fro incremental calculation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Mean rank error.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="path_learn.get_best_model">
+<code class="sig-prename descclassname">path_learn.</code><code class="sig-name descname">get_best_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">val_losses</span></em>, <em class="sig-param"><span class="n">model_snaps</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.get_best_model" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Returns the model with the minimum validation error from a sequence of models and their validation errors</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – A PathL model.</p></li>
+<li><p><strong>val_losses</strong> – Sequence of validation losses.</p></li>
+<li><p><strong>model_snaps</strong> – Sequence of model snapshots.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new PathL model with the parameters of the model with the minimum validation loss.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="path_learn.make_batches">
+<code class="sig-prename descclassname">path_learn.</code><code class="sig-name descname">make_batches</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_set</span></em>, <em class="sig-param"><span class="n">train_labs</span></em>, <em class="sig-param"><span class="n">batch_size</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.make_batches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the training batches. Performs random shuffling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_set</strong> – All training pairs.</p></li>
+<li><p><strong>train_labs</strong> – All training labels.</p></li>
+<li><p><strong>batch_size</strong> – Batch size.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list with batches.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="path_learn.train_model">
+<code class="sig-prename descclassname">path_learn.</code><code class="sig-name descname">train_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">G</span></em>, <em class="sig-param"><span class="n">T</span></em>, <em class="sig-param"><span class="n">train_set</span></em>, <em class="sig-param"><span class="n">train_labs</span></em>, <em class="sig-param"><span class="n">val_set</span></em>, <em class="sig-param"><span class="n">val_labs</span></em>, <em class="sig-param"><span class="n">epochs</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">batch_size</span><span class="o">=</span><span class="default_value">1024</span></em>, <em class="sig-param"><span class="n">batches_per_val</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">learning_rate</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">loss</span><span class="o">=</span><span class="default_value">'MCE-l'</span></em>, <em class="sig-param"><span class="n">weight_decay</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">lr_step</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">time_lim_hours</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">batch_lim</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">prnt</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">out_path</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">feat_transform_func</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#path_learn.train_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs the model training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>G</strong> – The graph that will be used in the model. Must follow the specifications of PathL class.</p></li>
+<li><p><strong>T</strong> – A two level dictionary containing the paths between nodes of G. Must follow the specifications of PathL class.</p></li>
+<li><p><strong>train_set</strong> – An iterable with entries of the form (node_id, edge_type, node_id).</p></li>
+<li><p><strong>train_labs</strong> – The labels for each element in train_set.</p></li>
+<li><p><strong>val_set</strong> – Validations set, of the same form as train set.</p></li>
+<li><p><strong>val_labs</strong> – Validation labels.</p></li>
+<li><p><strong>epochs</strong> – Number of training epochs.</p></li>
+<li><p><strong>batch_size</strong> – Size of training batch.</p></li>
+<li><p><strong>batches_per_val</strong> – Number of batches after which the validation error is recalculated.</p></li>
+<li><p><strong>learning_rate</strong> – Learning rate.</p></li>
+<li><p><strong>loss</strong> – Loss function. Must be one of  ‘MSE’: mean squared error ‘MCE’: multiclass-cross-entropy
+‘MCE-l’: listwise-multiclass-cross-entropy, ‘BCE’: binary-cross-entropy, ‘MAR’: margin loss</p></li>
+<li><p><strong>weight_decay</strong> – L2 weight decay parameter.</p></li>
+<li><p><strong>lr_step</strong> – Step for the learning rate scheduler. The learning rate will be multiplied with 0.1 every lr_step epochs.</p></li>
+<li><p><strong>time_lim_hours</strong> – Time limit to stop the training.</p></li>
+<li><p><strong>batch_lim</strong> – Number of batches limit to stop the training.</p></li>
+<li><p><strong>prnt</strong> – If true the losses are written in the terminal during training.</p></li>
+<li><p><strong>out_path</strong> – Folder path to provide output during training, useful for diagnostics.</p></li>
+<li><p><strong>feat_transform_func</strong> – A function used for feature transformation in forward() method of PathL. Must follow the
+conventions of PathL.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The function returns the trained model as well as the training and validation errors, in a tuple of the form:
+(model at batch with the lowest validation error, model at the final batch, (batch indices, train losses),
+(batch indices, validation mrrs, validation losses)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="preprocessing.html" class="btn btn-neutral float-right" title="Preprocessing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="PathL’s documentation." accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Pantelis Chronis
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

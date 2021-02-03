@@ -1,0 +1,441 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Preprocessing &mdash; PathL  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Feat Transform" href="feat_transform.html" />
+    <link rel="prev" title="PathL" href="path_learn.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> PathL
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="path_learn.html">PathL</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feat_transform.html">Feat Transform</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PathL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Preprocessing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/preprocessing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-preprocessing">
+<span id="preprocessing"></span><h1>Preprocessing<a class="headerlink" href="#module-preprocessing" title="Permalink to this headline">¶</a></h1>
+<p>This module provides various functions used to read/write and generate the data structures used for Path Learn</p>
+<dl class="py function">
+<dt id="preprocessing.add_Ts">
+<code class="sig-prename descclassname">preprocessing.</code><code class="sig-name descname">add_Ts</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">T0</span></em>, <em class="sig-param"><span class="n">T1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.add_Ts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Merges two path dictionaries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>T0</strong> – A path dictionary.</p></li>
+<li><p><strong>T1</strong> – A path dictionary.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A merged path dictionary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="preprocessing.add_neg_samples">
+<code class="sig-prename descclassname">preprocessing.</code><code class="sig-name descname">add_neg_samples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">G</span></em>, <em class="sig-param"><span class="n">pos_pairs</span></em>, <em class="sig-param"><span class="n">samp_size</span></em>, <em class="sig-param"><span class="n">steps</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.add_neg_samples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs negative sampling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>G</strong> – NetworkX graph.</p></li>
+<li><p><strong>pos_pairs</strong> – A collection of pairs with edges.</p></li>
+<li><p><strong>samp_size</strong> – Negative samples per existing edge.</p></li>
+<li><p><strong>steps</strong> – Max length of random walk.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of positive and negative node pairs and their labels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="preprocessing.add_paths">
+<code class="sig-prename descclassname">preprocessing.</code><code class="sig-name descname">add_paths</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">G</span></em>, <em class="sig-param"><span class="n">pair_set</span></em>, <em class="sig-param"><span class="n">steps</span></em>, <em class="sig-param"><span class="n">rev_rel</span></em>, <em class="sig-param"><span class="n">T</span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.add_paths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds new paths to path dictionary T.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>G</strong> – Networkx graph.</p></li>
+<li><p><strong>pair_set</strong> – A collection of pairs.</p></li>
+<li><p><strong>steps</strong> – Maximum path length.</p></li>
+<li><p><strong>rev_rel</strong> – Reverse relation type, for directed graphs.</p></li>
+<li><p><strong>T</strong> – A path dictionary T.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A path dictionary T that includes paths for pairs in pair_set.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="preprocessing.find_candidate_type">
+<code class="sig-prename descclassname">preprocessing.</code><code class="sig-name descname">find_candidate_type</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">G</span></em>, <em class="sig-param"><span class="n">edge_type</span></em>, <em class="sig-param"><span class="n">src_node</span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.find_candidate_type" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>G</strong> – NetworkX graph.</p></li>
+<li><p><strong>edge_type</strong> – An edge type.</p></li>
+<li><p><strong>src_node</strong> – A source node.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The node type that is connecter with edge_type to src_node.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="preprocessing.find_node_types">
+<code class="sig-prename descclassname">preprocessing.</code><code class="sig-name descname">find_node_types</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">G</span></em>, <em class="sig-param"><span class="n">edge_type</span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.find_node_types" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>G</strong> – NetworkX graph.</p></li>
+<li><p><strong>edge_type</strong> – Edge type.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Node types that correspond to the edge type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="preprocessing.find_pair_paths">
+<code class="sig-prename descclassname">preprocessing.</code><code class="sig-name descname">find_pair_paths</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">G</span></em>, <em class="sig-param"><span class="n">all_pairs</span></em>, <em class="sig-param"><span class="n">length</span></em>, <em class="sig-param"><span class="n">rev_rel</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.find_pair_paths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds paths beetween a collection of node pairs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>G</strong> – NetworkX graph.</p></li>
+<li><p><strong>all_pairs</strong> – A collection of node pairs.</p></li>
+<li><p><strong>length</strong> – Maximum path length</p></li>
+<li><p><strong>rev_rel</strong> – Type of reverse relation, for directed graphs.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A two level dictionary with the paths for each pair.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="preprocessing.find_paths_between">
+<code class="sig-prename descclassname">preprocessing.</code><code class="sig-name descname">find_paths_between</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">G</span></em>, <em class="sig-param"><span class="n">start</span></em>, <em class="sig-param"><span class="n">end</span></em>, <em class="sig-param"><span class="n">length</span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.find_paths_between" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds all paths up to a given length between two nodes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>G</strong> – NetworkX graph.</p></li>
+<li><p><strong>start</strong> – Start node.</p></li>
+<li><p><strong>end</strong> – End node.</p></li>
+<li><p><strong>length</strong> – Maximum path length.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A set with all paths up to <em>length</em> fron <em>start</em> to <em>ends</em>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="preprocessing.find_single_pair_paths">
+<code class="sig-prename descclassname">preprocessing.</code><code class="sig-name descname">find_single_pair_paths</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">G</span></em>, <em class="sig-param"><span class="n">pair</span></em>, <em class="sig-param"><span class="n">length</span></em>, <em class="sig-param"><span class="n">rev_rel</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.find_single_pair_paths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds all paths for a single pair of nodes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>G</strong> – NetworkX graph.</p></li>
+<li><p><strong>pair</strong> – The node pair.</p></li>
+<li><p><strong>length</strong> – Maximum length.</p></li>
+<li><p><strong>rev_rel</strong> – Reverse relation type, for directed graphs.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All paths up to <a href="#id1"><span class="problematic" id="id2">*</span></a>length( between the pair.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="preprocessing.find_single_paths">
+<code class="sig-prename descclassname">preprocessing.</code><code class="sig-name descname">find_single_paths</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">G</span></em>, <em class="sig-param"><span class="n">node</span></em>, <em class="sig-param"><span class="n">lim</span></em>, <em class="sig-param"><span class="n">paths_lim</span><span class="o">=</span><span class="default_value">inf</span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.find_single_paths" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>G</strong> – A NetworkX graph.</p></li>
+<li><p><strong>node</strong> – A node v.</p></li>
+<li><p><strong>lim</strong> – Maximum number of steps.</p></li>
+<li><p><strong>paths_lim</strong> – Maximum number of paths.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All paths up to lim steps, starting from node v.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="preprocessing.graph_from_files">
+<code class="sig-prename descclassname">preprocessing.</code><code class="sig-name descname">graph_from_files</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.graph_from_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads graph from file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> – folder path.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>NetworkX graph.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="preprocessing.graph_to_files">
+<code class="sig-prename descclassname">preprocessing.</code><code class="sig-name descname">graph_to_files</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">G</span></em>, <em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.graph_to_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves graph to file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>G</strong> – NetworkX graph.</p></li>
+<li><p><strong>path</strong> – Folder path.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="preprocessing.has_circles">
+<code class="sig-prename descclassname">preprocessing.</code><code class="sig-name descname">has_circles</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.has_circles" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> – A sequence of node/edges</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if the path contains circles</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="preprocessing.make_train_data">
+<code class="sig-prename descclassname">preprocessing.</code><code class="sig-name descname">make_train_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">G</span></em>, <em class="sig-param"><span class="n">edge_type</span></em>, <em class="sig-param"><span class="n">ntr</span></em>, <em class="sig-param"><span class="n">nvl</span></em>, <em class="sig-param"><span class="n">steps</span><span class="o">=</span><span class="default_value">3</span></em>, <em class="sig-param"><span class="n">neg</span><span class="o">=</span><span class="default_value">5</span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.make_train_data" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>G</strong> – NetworkX graph.</p></li>
+<li><p><strong>edge_type</strong> – Edge type.</p></li>
+<li><p><strong>ntr</strong> – Number of positive training pairs.</p></li>
+<li><p><strong>nvl</strong> – Number of positive validation pairs.</p></li>
+<li><p><strong>steps</strong> – Maximum path length.</p></li>
+<li><p><strong>neg</strong> – Negative samples pre positive egde.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>train pairs, train labels, validation pairs, validation edges, path dictionary T</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="feat_transform.html" class="btn btn-neutral float-right" title="Feat Transform" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="path_learn.html" class="btn btn-neutral float-left" title="PathL" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Pantelis Chronis
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
