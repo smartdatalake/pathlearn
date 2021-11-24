@@ -1,0 +1,9 @@
+protobuf
+torch
+networkx
+pandas
+numpy
+altair
+sklearn
+flask-restx
+streamlit

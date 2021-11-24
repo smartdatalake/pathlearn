@@ -1,0 +1,13 @@
+FROM ubuntu
+ARG config_file_path
+WORKDIR /app
+RUN apt-get update
+RUN apt-get install -y python3
+RUN apt-get install -y python3-pip
+COPY requirements.txt ./requirements.txt
+RUN pip3 install --upgrade -r requirements.txt
+EXPOSE 8501
+ADD ${config_file_path} /app/config.json.example
+RUN mkdir /app/src/
+COPY src/* /app/src/
+CMD streamlit run src/path_learn_st.py config.json.example
