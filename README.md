@@ -61,7 +61,7 @@ The Docker image is built with the command:
 sudo docker build -t pathlearn_streamlit -f DockerfileWebUI --build-arg config_file=<config_file> .
 ```
 
-The config_file must exist in this repository as Dockerfile will only see files under its own relative path.
+The config_file must be a json file that exists in this repository, as Dockerfile will only see files under its own relative path.
 
 To deploy the Web application with Docker, run the command:
 
