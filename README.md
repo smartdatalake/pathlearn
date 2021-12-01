@@ -58,11 +58,12 @@ The Web application is implemented in src/path_learn_st.py.
 The Docker image is built with the command:
 
 ```
-sudo docker build -t pathlearn_streamlit -f DockerfileWebUI --build-arg config_file_path=<config_file_path> .
+sudo docker build -t pathlearn_streamlit -f DockerfileWebUI --build-arg config_file=<config_file> .
 ```
 
-and deployed with the command:
+The config_file must exist in this repository as Dockerfile will only see files under its own relative path.
 
+To deploy the Web application with Docker, run the command:
 
 ```
 sudo docker run --rm --name path_learn -v <local_data_directory>:/app/data pathlearn_streamlit
@@ -77,7 +78,4 @@ streamlit run src/path_learn_st.py <config_file_path>
 ```
 
 The config_file_path must be the path to a json file with the keys for using the app and the path that will be used to read and store the data (e.g., config.json.example in this repository). The application additionally requires the packages altair, pandas and sklearn.
-
-
-
 
