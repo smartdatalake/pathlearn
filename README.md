@@ -58,7 +58,7 @@ The Web application is implemented in src/path_learn_st.py.
 The Docker image is built with the command:
 
 ```
-sudo docker build -t pathlearn_streamlit -f DockerfileWebUI --build-arg config_file=<config_file> .
+sudo docker build -t smartdatalake/pathlearn -f DockerfileWebUI --build-arg config_file=<config_file> .
 ```
 
 The config_file must be a json file that exists in this repository, as Dockerfile will only see files under its own relative path.
@@ -66,7 +66,7 @@ The config_file must be a json file that exists in this repository, as Dockerfil
 To deploy the Web application with Docker, run the command:
 
 ```
-sudo docker run --rm --name path_learn -v <local_data_directory>:/app/data pathlearn_streamlit
+sudo docker run --rm --name path_learn -v <local_data_directory>:/app/data smartdatalake/pathlearn
 ```
 
 The data required for the tasks must be placed in local_data_directory (e.g. "$(pwd)"/data). The Web application is accesible at localhost:8501
