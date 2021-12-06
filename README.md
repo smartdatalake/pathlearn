@@ -63,6 +63,12 @@ sudo docker build -t smartdatalake/pathlearn -f DockerfileWebUI --build-arg conf
 
 The config_file must be a json file that exists in this repository, as Dockerfile will only see files under its own relative path.
 
+The image can also be found here and pulled with:
+
+```
+docker pull smartdatalake/pathlearn
+```
+
 To deploy the Web application with Docker, run the command:
 
 ```
